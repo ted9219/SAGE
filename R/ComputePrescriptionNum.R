@@ -1,0 +1,58 @@
+computePrescriptionNum <- function(monthStartDate,
+                                   monthEndDate,
+                                   databaseName,
+                                   outputFolder) {
+
+  monthStartDate <- max(as.Date(monthStartDate), as.Date("2006-01-01"))
+  monthEndDate <- as.Date(monthEndDate)
+
+  tmpDir <- file.path(outputFolder, "tmpData")
+
+  if (!file.exists(file.path(outputFolder, "results")))
+    dir.create(file.path(outputFolder, "results"))
+  resultsDir <- file.path(outputFolder, "results")
+
+  `%>%` <- magrittr::`%>%`
+  '%!in%' <- Negate('%in%')
+
+  cohortsToCreate <- read.csv(file.path("inst", "settings", "CohortsToCreate.csv"))
+
+  ParallelLogger::logInfo("Calculating prescription numbers")
+  for (i in cohortsToCreate[cohortsToCreate$cohortType=="Drug", "cohortId"]){
+    writeLines(paste("Calculating prescription numbers :", cohortsToCreate[cohortsToCreate$cohortId==i, "name"]))
+
+
+  targetDrug <- readRDS(file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
+
+  whole_mth <- data.frame()
+  yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")
+
+  for(m in as.list(yearMth_seq)){
+    whole_mth_m <- targetDrug %>%
+      dplyr::filter(m == start_yearMth) %>%
+      dplyr::mutate(calDate = m) %>%
+      dplyr::group_by(calDate) %>%
+      dplyr::summarise(prescriptions = dplyr::n(), .groups = 'drop')
+    whole_mth <- rbind(whole_mth, whole_mth_m)
+  }
+
+  prescriptionNum <- whole_mth
+
+  for (m in as.list(yearMth_seq)) {
+    if (m %!in% whole_mth$calDate) {
+      row <- data.frame(m, 0)
+      names(row) <- c("calDate", "prescriptions")
+      prescriptionNum <- rbind(prescriptionNum, row)
+    }
+
+  }
+
+  prescriptionNum <- prescriptionNum %>%
+    dplyr::arrange(calDate) %>%
+    dplyr::mutate(database = databaseName)
+
+  write.csv(prescriptionNum, file.path(resultsDir, paste0("drugCohort_", i, ".csv")))
+
+  }
+
+}

@@ -1,0 +1,10 @@
+atlasId,atlasName,cohortId,name,cohortType
+1,[SAGE] Febuxostat user,1,Febuxostat,Drug
+2,[SAGE] Ranitidine user,2,Ranitidine,Drug
+3,[SAGE] Fluoroquinolone user,3,Fluoroquinolone,Drug
+4,[SAGE] Hydroxyethyl Starch user,4,HES,Drug
+5,[SAGE] JAK inhibitor user,5,Jaki,Drug
+6,[SAGE] Nizatidine user,6,Nizatidine,Drug
+7,[SAGE] Lorcaserin user,7,Lorcaserin,Drug
+8,[SAGE] Anorexiant user,8,AnorexiantGuide,Drug
+9,[SAGE] Anorexiant user without lorcaserin,9,AnorexiantRMP,Drug
