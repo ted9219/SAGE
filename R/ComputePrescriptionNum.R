@@ -8,8 +8,6 @@ computePrescriptionNum <- function(monthStartDate,
 
   tmpDir <- file.path(outputFolder, "tmpData")
 
-  if (!file.exists(file.path(outputFolder, "results")))
-    dir.create(file.path(outputFolder, "results"))
   resultsDir <- file.path(outputFolder, "results")
 
   `%>%` <- magrittr::`%>%`
@@ -22,37 +20,44 @@ computePrescriptionNum <- function(monthStartDate,
     writeLines(paste("Calculating prescription numbers :", cohortsToCreate[cohortsToCreate$cohortId==i, "name"]))
 
 
-  targetDrug <- readRDS(file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
+    targetDrug <- readRDS(file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
 
-  whole_mth <- data.frame()
-  yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")
+    whole_mth <- data.frame()
+    yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")
 
-  for(m in as.list(yearMth_seq)){
-    whole_mth_m <- targetDrug %>%
-      dplyr::filter(m == start_yearMth) %>%
-      dplyr::mutate(calDate = m) %>%
-      dplyr::group_by(calDate) %>%
-      dplyr::summarise(prescriptions = dplyr::n(), .groups = 'drop')
-    whole_mth <- rbind(whole_mth, whole_mth_m)
-  }
-
-  prescriptionNum <- whole_mth
-
-  for (m in as.list(yearMth_seq)) {
-    if (m %!in% whole_mth$calDate) {
-      row <- data.frame(m, 0)
-      names(row) <- c("calDate", "prescriptions")
-      prescriptionNum <- rbind(prescriptionNum, row)
+    for(m in as.list(yearMth_seq)){
+      whole_mth_m <- targetDrug %>%
+        dplyr::filter(m == start_yearMth) %>%
+        dplyr::mutate(calDate = m) %>%
+        dplyr::group_by(calDate) %>%
+        dplyr::summarise(prescriptions = dplyr::n(), .groups = 'drop')
+      whole_mth <- rbind(whole_mth, whole_mth_m)
     }
 
+    prescriptionNum <- whole_mth
+
+    for (m in as.list(yearMth_seq)) {
+      if (m %!in% whole_mth$calDate) {
+        row <- data.frame(m, 0)
+        names(row) <- c("calDate", "prescriptions")
+        prescriptionNum <- rbind(prescriptionNum, row)
+      }
+
+    }
+
+    prescriptionNum <- prescriptionNum %>%
+      dplyr::arrange(calDate) %>%
+      dplyr::mutate(database = databaseName)
+
+    write.csv(prescriptionNum, file.path(resultsDir, paste0("drugCohort_", i, ".csv")))
+
   }
 
-  prescriptionNum <- prescriptionNum %>%
-    dplyr::arrange(calDate) %>%
-    dplyr::mutate(database = databaseName)
-
-  write.csv(prescriptionNum, file.path(resultsDir, paste0("drugCohort_", i, ".csv")))
-
-  }
+  message("Adding results to zip file")
+  zipName <- file.path(outputFolder, sprintf("drugCohort_%s.zip", databaseName))
+  files <- list.files(resultsDir, pattern = ".*\\.csv$")
+  oldWd <- setwd(resultsDir)
+  on.exit(setwd(oldWd))
+  DatabaseConnector::createZipFile(zipFile = zipName, files = files)
 
 }

@@ -60,6 +60,9 @@ execute <- function(connectionDetails,
   if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)
 
+  if (!file.exists(file.path(outputFolder, "results")))
+    dir.create(file.path(outputFolder, "results"))
+
   ParallelLogger::addDefaultFileLogger(file.path(outputFolder, "log.txt"))
   ParallelLogger::addDefaultErrorReportLogger(file.path(outputFolder, "errorReportR.txt"))
   on.exit(ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE))

@@ -5,6 +5,8 @@ createCohorts <- function(connection,
                           cohortTable,
                           outputFolder) {
 
+  resultsDir <- file.path(outputFolder, "results")
+
   # Create study cohort table structure:
   sql <- SqlRender::readSql(file.path("inst", "sql", "CreateCohortTable.sql"))
   sql <- SqlRender::render(sql,
@@ -20,11 +22,11 @@ createCohorts <- function(connection,
     writeLines(paste("Creating", cohortsToCreate$cohortType[i], "cohort:", cohortsToCreate$name[i]))
     sql <- SqlRender::readSql(file.path("inst", "sql", paste0(cohortsToCreate$name[i], ".sql")))
     sql <- SqlRender::render(sql,
-                              cdm_database_schema = cdmDatabaseSchema,
-                              vocabulary_database_schema = cdmDatabaseSchema,
-                              target_database_schema = cohortDatabaseSchema,
-                              target_cohort_table = cohortTable,
-                              target_cohort_id = cohortsToCreate$cohortId[i])
+                             cdm_database_schema = cdmDatabaseSchema,
+                             vocabulary_database_schema = cdmDatabaseSchema,
+                             target_database_schema = cohortDatabaseSchema,
+                             target_cohort_table = cohortTable,
+                             target_cohort_id = cohortsToCreate$cohortId[i])
     sql <- SqlRender::translate(sql, targetDialect = attr(connection, "dbms"))
     DatabaseConnector::executeSql(connection, sql, progressBar = TRUE, reportOverallTime = TRUE)
   }
@@ -39,9 +41,5 @@ createCohorts <- function(connection,
   names(incidencecounts) <- SqlRender::snakeCaseToCamelCase(names(incidencecounts))
   counts <-  merge(data.frame(cohortDefinitionId = cohortsToCreate$cohortId, cohortName  = cohortsToCreate$name),
                    incidencecounts, by = "cohortDefinitionId")
-  write.csv(counts, file.path(outputFolder, "CohortCounts.csv"), row.names = F)
+  write.csv(counts, file.path(resultsDir, "CohortCounts.csv"), row.names = F)
 }
-
-
-
-
