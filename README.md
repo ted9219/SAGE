@@ -13,7 +13,7 @@ How to run
 ==========
 1. Follow [these instructions](https://ohdsi.github.io/Hades/rSetup.html) for setting up your R environment, including RTools and Java.
 
-2. Open your study package in RStudio. Use the following code to install all the dependencies or use dockerfile in `DockerImage`:
+2. Open your study package in RStudio. Use the following code to install all the dependencies:
 
 	```r
 	install.packages('devtools')
@@ -27,6 +27,8 @@ How to run
 	devtools::install_github("OHDSI/DatabaseConnector",ref="v5.0.2")
 	devtools::install_github("OHDSI/ParallelLogger",ref="v2.0.2")
 	```
+	
+	Or use dockerfile in `DockerImage`
 
 	Build Docker Image
 	```
