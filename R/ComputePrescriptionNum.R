@@ -22,6 +22,9 @@ computePrescriptionNum <- function(monthStartDate,
 
     targetDrug <- readRDS(file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
 
+    targetDrug <- targetDrug %>%
+      dplyr::mutate(period = as.numeric(difftime(COHORT_END_DATE, COHORT_START_DATE, units = "days"))+1)
+
     whole_mth <- data.frame()
     yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")
 
@@ -30,7 +33,9 @@ computePrescriptionNum <- function(monthStartDate,
         dplyr::filter(m == start_yearMth) %>%
         dplyr::mutate(calDate = m) %>%
         dplyr::group_by(calDate) %>%
-        dplyr::summarise(prescriptions = dplyr::n(), .groups = 'drop')
+        dplyr::summarise(prescriptions = dplyr::n(),
+                         person = dplyr::n_distinct(SUBJECT_ID),
+                         periodSum = sum(period), .groups = 'drop')
       whole_mth <- rbind(whole_mth, whole_mth_m)
     }
 
@@ -38,8 +43,8 @@ computePrescriptionNum <- function(monthStartDate,
 
     for (m in as.list(yearMth_seq)) {
       if (m %!in% whole_mth$calDate) {
-        row <- data.frame(m, 0)
-        names(row) <- c("calDate", "prescriptions")
+        row <- data.frame(m, 0, 0, 0)
+        names(row) <- c("calDate", "prescriptions", "person", "periodSum")
         prescriptionNum <- rbind(prescriptionNum, row)
       }
 

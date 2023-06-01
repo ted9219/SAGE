@@ -8,3 +8,4 @@ atlasId,atlasName,cohortId,name,cohortType
 7,[SAGE] Lorcaserin user,7,Lorcaserin,Drug
 8,[SAGE] Anorexiant user,8,AnorexiantGuide,Drug
 9,[SAGE] Anorexiant user without lorcaserin,9,AnorexiantRMP,Drug
+10,[SAGE] Allopurinol user,10,Allopurinol,Drug
