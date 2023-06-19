@@ -24,6 +24,8 @@
 #' @param databaseName         The name of the database (e.g. 'SynPUFs').
 #' @param createCohorts        Create the cohortTable table with the exposure and outcome cohorts?
 #' @param runPrescriptionNum   Calculate the monthly prescription numbers?
+#' @param runDUR               Calculate the monthly prescription numbers of DUR?
+#' @param resultsToZip         Create the zip files?
 #' @param yearStartDate        Start date of observation period, has to be on or later than 2006-01-01
 #' @param yearEndDate          End date of observation period, has to be on or earlier than the latest date in the database
 #' @param monthStartDate       Start date for monthly prescription numbers, has to be on or later than 2006-01-01
@@ -52,6 +54,8 @@ execute <- function(connectionDetails,
                     databaseName = "Unknown",
                     createCohorts = TRUE,
                     runPrescriptionNum = TRUE,
+                    runDUR = TRUE,
+                    resultsToZip = TRUE,
                     yearStartDate = as.Date("2006-01-01"),
                     yearEndDate = as.Date("2022-12-31"),
                     monthStartDate = as.Date("2006-01-01"),
@@ -86,6 +90,21 @@ execute <- function(connectionDetails,
                            monthEndDate = monthEndDate,
                            databaseName = databaseName,
                            outputFolder = outputFolder)
+  }
+
+  if (runDUR) {
+
+    DURPrescriptionNum(monthStartDate = monthStartDate,
+                       monthEndDate = monthEndDate,
+                       databaseName = databaseName,
+                       outputFolder = outputFolder)
+  }
+
+
+  if (resultsToZip) {
+
+    saveZipfile(databaseName,
+                outputFolder)
   }
 
   invisible(NULL)

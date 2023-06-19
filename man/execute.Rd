@@ -13,6 +13,8 @@ execute(
   databaseName = "Unknown",
   createCohorts = TRUE,
   runPrescriptionNum = TRUE,
+  runDUR = TRUE,
+  resultsToZip = TRUE,
   yearStartDate = as.Date("2006-01-01"),
   yearEndDate = as.Date("2022-12-31"),
   monthStartDate = as.Date("2006-01-01"),
@@ -45,6 +47,10 @@ performance.}
 \item{createCohorts}{Create the cohortTable table with the exposure and outcome cohorts?}
 
 \item{runPrescriptionNum}{Calculate the monthly prescription numbers?}
+
+\item{runDUR}{Calculate the monthly prescription numbers of DUR?}
+
+\item{resultsToZip}{Create the zip files?}
 
 \item{yearStartDate}{Start date of observation period, has to be on or later than 2006-01-01}
 

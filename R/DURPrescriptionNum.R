@@ -1,7 +1,7 @@
-computePrescriptionNum <- function(monthStartDate,
-                                   monthEndDate,
-                                   databaseName,
-                                   outputFolder) {
+DURPrescriptionNum <- function(monthStartDate,
+                               monthEndDate,
+                               databaseName,
+                               outputFolder) {
 
   monthStartDate <- max(as.Date(monthStartDate), as.Date("2006-01-01"))
   monthEndDate <- as.Date(monthEndDate)
@@ -15,15 +15,38 @@ computePrescriptionNum <- function(monthStartDate,
 
   cohortsToCreate <- read.csv(file.path("inst", "settings", "CohortsToCreate.csv"))
 
-  ParallelLogger::logInfo("Calculating prescription numbers")
-  for (i in cohortsToCreate[cohortsToCreate$cohortType=="Drug", "cohortId"]){
-    writeLines(paste("Calculating prescription numbers :", cohortsToCreate[cohortsToCreate$cohortId==i, "name"]))
+  ParallelLogger::logInfo("Calculating prescription numbers of DUR")
+  for (i in cohortsToCreate[cohortsToCreate$cohortType=="DUR", "cohortId"]){
+    writeLines(paste("Calculating prescription numbers of DUR:", cohortsToCreate[cohortsToCreate$cohortId==i, "name"]))
 
 
     targetDrug <- readRDS(file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
 
     targetDrug <- targetDrug %>%
       dplyr::mutate(period = as.numeric(difftime(COHORT_END_DATE, COHORT_START_DATE, units = "days"))+1)
+
+    limit <- cohortsToCreate[cohortsToCreate$cohortId == i, "ageLimit"]
+
+    if (cohortsToCreate[cohortsToCreate$cohortId == i, "range"] == "above") {
+
+      targetDrug <- targetDrug %>%
+        dplyr::filter(AGE >= limit)
+
+    } else if (cohortsToCreate[cohortsToCreate$cohortId == i, "range"] == "exceed") {
+
+      targetDrug <- targetDrug %>%
+        dplyr::filter(AGE > limit)
+
+    } else if (cohortsToCreate[cohortsToCreate$cohortId == i, "range"] == "upto") {
+
+      targetDrug <- targetDrug %>%
+        dplyr::filter(AGE <= limit)
+
+    } else if (cohortsToCreate[cohortsToCreate$cohortId == i, "range"] == "under") {
+
+      targetDrug <- targetDrug %>%
+        dplyr::filter(AGE < limit)
+    }
 
     whole_mth <- data.frame()
     yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")

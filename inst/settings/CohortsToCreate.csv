@@ -1,11 +1,21 @@
-atlasId,atlasName,cohortId,name,cohortType
-1,[SAGE] Febuxostat user,1,Febuxostat,Drug
-2,[SAGE] Ranitidine user,2,Ranitidine,Drug
-3,[SAGE] Fluoroquinolone user,3,Fluoroquinolone,Drug
-4,[SAGE] Hydroxyethyl Starch user,4,HES,Drug
-5,[SAGE] JAK inhibitor user,5,Jaki,Drug
-6,[SAGE] Nizatidine user,6,Nizatidine,Drug
-7,[SAGE] Lorcaserin user,7,Lorcaserin,Drug
-8,[SAGE] Anorexiant user,8,AnorexiantGuide,Drug
-9,[SAGE] Anorexiant user without lorcaserin,9,AnorexiantRMP,Drug
-10,[SAGE] Allopurinol user,10,Allopurinol,Drug
+atlasId,atlasName,cohortId,name,cohortType,range,ageLimit
+1,[SAGE] Febuxostat user,1,Febuxostat,Drug,,
+2,[SAGE] Ranitidine user,2,Ranitidine,Drug,,
+3,[SAGE] Fluoroquinolone user,3,Fluoroquinolone,Drug,,
+4,[SAGE] Hydroxyethyl Starch user,4,HES,Drug,,
+5,[SAGE] JAK inhibitor user,5,Jaki,Drug,,
+6,[SAGE] Nizatidine user,6,Nizatidine,Drug,,
+7,[SAGE] Lorcaserin user,7,Lorcaserin,Drug,,
+8,[SAGE] Anorexiant user,8,AnorexiantGuide,Drug,,
+9,[SAGE] Anorexiant user without lorcaserin,9,AnorexiantRMP,Drug,,
+10,[SAGE] Allopurinol user,10,Allopurinol,Drug,,
+13,[SAGE] Haloperidol tablet or injection,13,Haloperidol,DUR,above,65
+15,[SAGE] tramadol capsule etc,15,Tramadol,DUR,under,12
+17,[SAGE] mirtazapine tablet or disintegrating tablet,17,Mirtazapine,DUR,under,18
+20,[SAGE] carbocysteine capsule or syrup,20,Carbocysteine,DUR,under,2
+21,[SAGE] Chlorpheniramine etc,21,Chlorpheniramine,DUR,above,65
+22,[SAGE] dimenhydrinate etc,22,Dimenhydrinate,DUR,above,65
+23,[SAGE] hydroxyzine tablet or syrup,23,Hydroxyzine,DUR,above,65
+26,[SAGE] oxybutynin tablet,26,Oxybutynin,DUR,above,65
+27,[SAGE] propiverine tablet,27,Propiverine,DUR,above,65
+28,[SAGE] solifenacin tablet or disintegrate,28,Solifenacin,DUR,above,65

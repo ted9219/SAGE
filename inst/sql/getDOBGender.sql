@@ -2,8 +2,8 @@ SELECT p.person_id as subject_id, p.gender_concept_id,
   case when p.gender_concept_id = 8507 then 'Male'
   when p.gender_concept_id = 8532 then 'Female'
   ELSE 'Unknown' END as gender,
-  case when p.day_of_birth = 0 then DATEFROMPARTS(p.year_of_birth, ISNULL(p.month_of_birth, 7), 1)
-  ELSE DATEFROMPARTS(p.year_of_birth, ISNULL(p.month_of_birth, 7), ISNULL(p.day_of_birth, 1)) END AS DOB,
+  case when p.day_of_birth = 0 then DATEFROMPARTS(p.year_of_birth, ISNULL(p.month_of_birth, 7), 15)
+  ELSE DATEFROMPARTS(p.year_of_birth, ISNULL(p.month_of_birth, 7), ISNULL(p.day_of_birth, 15)) END AS DOB,
   op.observation_period_start_date as COHORT_START_DATE,
   op.observation_period_end_date as COHORT_END_DATE,
   YEAR(op.observation_period_start_date) as start_year, YEAR(op.observation_period_end_date) as end_year,

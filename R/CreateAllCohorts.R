@@ -5,6 +5,7 @@ createAllCohorts <- function(connectionDetails,
                              outputFolder,
                              yearStartDate,
                              yearEndDate) {
+
   if (!file.exists(outputFolder))
     dir.create(outputFolder)
 
@@ -40,7 +41,7 @@ createAllCohorts <- function(connectionDetails,
 
   # Prepare data for drug cohorts
   ParallelLogger::logInfo("Preparing data for drug cohorts")
-  for (i in cohortsToCreate[cohortsToCreate$cohortType=="Drug", "cohortId"]){
+  for (i in cohortsToCreate[, "cohortId"]){
     writeLines(paste("Preparing data for drug cohort:", cohortsToCreate[cohortsToCreate$cohortId==i, "name"]))
     sql <- "SELECT * FROM @cohort_database_schema.@cohort_table WHERE cohort_definition_id = @cohortId"
     sql <- SqlRender::render(sql,
@@ -56,11 +57,9 @@ createAllCohorts <- function(connectionDetails,
                     start_yearMth = as.Date(format(COHORT_START_DATE, "%Y-%m-01")),
                     end_year = lubridate::year(COHORT_END_DATE),
                     end_yearMth = as.Date(format(COHORT_END_DATE, "%Y-%m-01")),
-                    AGE_YR = lubridate::as.period(lubridate::interval(DOB, as.Date(paste0(start_year, '-07-01'))))$year,
-                    AGE_MTH = lubridate::as.period(lubridate::interval(DOB, as.Date(paste0(start_year, '-07-01'))))$year) %>%
-      dplyr::arrange(SUBJECT_ID, COHORT_START_DATE)%>%
-      dplyr::mutate(AGE_YR_GROUP = cut(AGE_YR, breaks = c(0, 17, 24, 44, 64, 74, 84, 150), include.lowest = TRUE),
-                    AGE_MTH_GROUP = cut(AGE_MTH, breaks = c(0, 17, 24, 44, 64, 74, 84, 150), include.lowest = TRUE))
+                    AGE = lubridate::as.period(lubridate::interval(DOB, as.Date(COHORT_START_DATE)))$year) %>%
+      dplyr::arrange(SUBJECT_ID, COHORT_START_DATE)
+
     saveRDS(data_drug,  file.path(tmpDir, paste0("drugCohort_", i, ".RDS")))
   }
 
