@@ -77,6 +77,8 @@ How to run
 	        databaseName = databaseName,
 	        createCohorts = TRUE,
 	        runPrescriptionNum = TRUE,
+	        runDUR = TRUE,
+	        resultsToZip = TRUE,
 	        yearStartDate = as.Date("2006-01-01"),
 	        yearEndDate = as.Date("2022-12-31"),
 	        monthStartDate = as.Date("2006-01-01"),
