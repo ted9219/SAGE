@@ -1,0 +1,21 @@
+Package: SAGE
+Type: Package
+Title: SAGE
+Version: 0.1.0
+Author@R: c(
+	person("Subin", "Kim", , "jg051623@yuhs.ac", role = c("aut", "cre")),
+	person("Seonji", "Kim", , "seonji0316@yuhs.ac", role = c("aut")),
+	person("Seng Chan", "You",,"seng.chan.you@ohdsi.org", role = c("aut"))
+	)
+Maintainer: Subin Kim <jg051623@yuhs.ac>
+Description: A package for SAGE study.
+Imports: 
+    DatabaseConnector,
+    SqlRender,
+    dplyr,
+    lubridate,
+    ParallelLogger
+License: Apache License 2.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3

@@ -37,10 +37,13 @@ RUN R -e 'devtools::install_github("OHDSI/ParallelLogger",ref="v2.0.2")'
 # install JDBC driver
 RUN mkdir -p /home/rstudio/temp
 RUN mkdir -p /home/rstudio/jdbc
-RUN mkdir -p /home/rstudio/analysis
+ADD analysis /home/rstudio/analysis
 RUN mkdir -p /home/rstudio/result
+
 RUN R -e "DatabaseConnector::downloadJdbcDrivers(dbms = 'postgresql',pathToDriver = '/home/rstudio/jdbc')"
 RUN R -e "DatabaseConnector::downloadJdbcDrivers(dbms = 'redshift',pathToDriver = '/home/rstudio/jdbc')"
 RUN R -e "DatabaseConnector::downloadJdbcDrivers(dbms = 'sql server',pathToDriver = '/home/rstudio/jdbc')"
 RUN R -e "DatabaseConnector::downloadJdbcDrivers(dbms = 'oracle',pathToDriver = '/home/rstudio/jdbc')"
 RUN R -e "DatabaseConnector::downloadJdbcDrivers(dbms = 'spark',pathToDriver = '/home/rstudio/jdbc')"
+
+RUN R -e "setwd('/home/rstudio/analysis'); devtools::install()"

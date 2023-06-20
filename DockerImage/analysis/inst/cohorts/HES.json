@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Ingredient",
+        "CONCEPT_CODE": "5531",
+        "CONCEPT_ID": 19077117,
+        "CONCEPT_NAME": "hetastarch",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Ingredient",
+        "CONCEPT_CODE": "816249",
+        "CONCEPT_ID": 40161354,
+        "CONCEPT_NAME": "pentastarch",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Quant Clinical Drug",
+        "CONCEPT_CODE": "OMOP4645424",
+        "CONCEPT_ID": 42918540,
+        "CONCEPT_NAME": "500 ML Hetastarch 60 MG/ML / Sodium Chloride 9 MG/ML Injectable Solution",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm Extension"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Quant Clinical Drug",
+        "CONCEPT_CODE": "OMOP4645426",
+        "CONCEPT_ID": 42918542,
+        "CONCEPT_NAME": "500 ML Hetastarch 60 MG/ML / Magnesium Chloride 0.3 MG/ML / Potassium Chloride 0.3 MG/ML / Sodium Acetate Trihydrate 4.63 MG/ML / Sodium Chloride 6 MG/ML Injectable Solution",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm Extension"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Quant Clinical Drug",
+        "CONCEPT_CODE": "OMOP4645186",
+        "CONCEPT_ID": 42918295,
+        "CONCEPT_NAME": "500 ML Pentastarch 100 MG/ML Pen Injector",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm Extension"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Quant Clinical Drug",
+        "CONCEPT_CODE": "OMOP4645430",
+        "CONCEPT_ID": 42918546,
+        "CONCEPT_NAME": "500 ML calcium chloride, dihydration 0.37 MG/ML / Hetastarch 60 MG/ML / Magnesium Chloride 0.2 MG/ML / malic acid 0.67 MG/ML / Potassium Chloride 0.3 MG/ML / ... Injectable Solution",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm Extension"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "Quant Clinical Drug",
+        "CONCEPT_CODE": "OMOP4645448",
+        "CONCEPT_ID": 42918564,
+        "CONCEPT_NAME": "500 ML Calcium Chloride 0.37 MG/ML / Glucose 0.92 MG/ML / Hetastarch 60 MG/ML / Lactate 5 MG/ML / Magnesium Chloride 0.09 MG/ML / Potassium Chloride 0.222 MG/ML / ... Injectable Solution",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "S",
+        "STANDARD_CONCEPT_CAPTION": "Standard",
+        "VOCABULARY_ID": "RxNorm Extension"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    },
+    {
+      "concept": {
+        "CONCEPT_CLASS_ID": "ATC 5th",
+        "CONCEPT_CODE": "B05AA07",
+        "CONCEPT_ID": 21601144,
+        "CONCEPT_NAME": "hydroxyethylstarch; parenteral",
+        "DOMAIN_ID": "Drug",
+        "INVALID_REASON": "V",
+        "INVALID_REASON_CAPTION": "Valid",
+        "STANDARD_CONCEPT": "C",
+        "STANDARD_CONCEPT_CAPTION": "Classification",
+        "VOCABULARY_ID": "ATC"
+      },
+      "isExcluded": false,
+      "includeDescendants": true,
+      "includeMapped": false
+    }
+  ]
+}
