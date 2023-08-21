@@ -48,6 +48,12 @@ DURPrescriptionNum <- function(monthStartDate,
         dplyr::filter(AGE < limit)
     }
 
+    firstRx<- targetDrug %>%
+      dplyr::group_by(SUBJECT_ID) %>%
+      dplyr::arrange(COHORT_START_DATE) %>%
+      dplyr::filter(dplyr::row_number()==1) %>%
+      dplyr::ungroup()
+
     whole_mth <- data.frame()
     yearMth_seq <- seq(monthStartDate, monthEndDate, by = "month")
 
@@ -73,11 +79,43 @@ DURPrescriptionNum <- function(monthStartDate,
 
     }
 
-    prescriptionNum <- prescriptionNum %>%
+    rm(whole_mth)
+    rm(whole_mth_m)
+
+    whole_mth_first <- data.frame()
+
+    for(m in as.list(yearMth_seq)){
+      whole_mth_m_first <- firstRx %>%
+        dplyr::filter(m == start_yearMth) %>%
+        dplyr::mutate(calDate = m) %>%
+        dplyr::group_by(calDate) %>%
+        dplyr::summarise(prescriptionsFirst = dplyr::n(),
+                         personFirst = dplyr::n_distinct(SUBJECT_ID),
+                         periodSumFirst = sum(period), .groups = 'drop')
+      whole_mth_first <- rbind(whole_mth_first, whole_mth_m_first)
+    }
+
+    firstRxNum <- whole_mth_first
+
+    for (m in as.list(yearMth_seq)) {
+      if (m %!in% whole_mth_first$calDate) {
+        row <- data.frame(m, 0, 0, 0)
+        names(row) <- c("calDate", "prescriptionsFirst", "personFirst", "periodSumFirst")
+        firstRxNum <- rbind(firstRxNum, row)
+      }
+
+    }
+
+    rm(whole_mth_first)
+    rm(whole_mth_m_first)
+
+    totalRxNum <- merge(prescriptionNum, firstRxNum, by = "calDate")
+
+    totalRxNum <- totalRxNum %>%
       dplyr::arrange(calDate) %>%
       dplyr::mutate(database = databaseName)
 
-    write.csv(prescriptionNum, file.path(resultsDir, paste0("drugCohort_", i, ".csv")))
+    write.csv(totalRxNum, file.path(resultsDir, paste0("drugCohort_", i, ".csv")))
 
   }
 
