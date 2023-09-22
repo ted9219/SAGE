@@ -67,7 +67,6 @@ computePrescriptionNum <- function(monthStartDate,
         dplyr::mutate(calDate = m) %>%
         dplyr::group_by(calDate) %>%
         dplyr::summarise(prescriptionsFirst = dplyr::n(),
-                         personFirst = dplyr::n_distinct(SUBJECT_ID),
                          periodSumFirst = sum(period), .groups = 'drop')
       whole_mth_first <- rbind(whole_mth_first, whole_mth_m_first)
     }
@@ -76,8 +75,8 @@ computePrescriptionNum <- function(monthStartDate,
 
     for (m in as.list(yearMth_seq)) {
       if (m %!in% whole_mth_first$calDate) {
-        row <- data.frame(m, 0, 0, 0)
-        names(row) <- c("calDate", "prescriptionsFirst", "personFirst", "periodSumFirst")
+        row <- data.frame(m, 0, 0)
+        names(row) <- c("calDate", "prescriptionsFirst", "periodSumFirst")
         firstRxNum <- rbind(firstRxNum, row)
       }
 
