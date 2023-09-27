@@ -1,26 +1,25 @@
 library(SAGE)
 
 # The folder where the study intermediate and result files will be written:
-outputFolder <- file.path("outputFolderDir")
+outputFolder <- '/data/results'
 
 connectionDetails <- DatabaseConnector::createConnectionDetails(
-  dbms = 'postgresql',
-  server = 'myserver',
-  user = 'joe',
-  password = 'secret',
-  pathToDriver = 'S:/jdbcDrivders'
+  dbms = "postgresql",
+  server = paste0(strsplit(Sys.getenv("MEDICAL_RECORDS_URL"), ':')[[1]][1], "/", Sys.getenv("MEDICAL_RECORDS_DATABASE")),
+  user = Sys.getenv("MEDICAL_RECORDS_USER"),
+  password = Sys.getenv("MEDICAL_RECORDS_PW"),
+  port = strsplit(Sys.getenv("MEDICAL_RECORDS_URL"), ':')[[1]][2],
+  pathToDriver = '/home/script/jdbc'
 )
 
-
 # The name of the database schema where the CDM data can be found:
-cdmDatabaseSchema<-'CDM_mydb.dbo'
+cdmDatabaseSchema <- Sys.getenv("MEDICAL_RECORDS_SCHEMA")
+cohortDatabaseSchema <- paste0(Sys.getenv("MEDICAL_RECORDS_SCHEMA"),'_results_exec')
 
-# The name of the database schema and table where the study-specific cohorts will be instantiated:
-cohortDatabaseSchema <- 'mydb.dbo'
-cohortTable <- "SAGE"
+cohortTable <- "cohort"
 
 # Some meta-information that will be used by the export function:
-databaseName <- 'MYDATABASE'
+databaseName = Sys.getenv("MEDICAL_RECORDS_SCHEMA")
 
 
 execute(connectionDetails = connectionDetails,
